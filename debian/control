@@ -54,17 +54,18 @@ Recommends: raspberrypi-kernel
 Description: Raspberry Pi bootloader
  This package contains the Raspberry Pi firmware and bootloader.
 
-Package: raspberrypi-kernel
+Package: raspberrypi-kernel-rt
 Section: kernel
 Architecture: armel armhf arm64
 Depends: ${misc:Depends}
 Breaks: raspberrypi-bootloader (<<1.20160324-1)
 Replaces: raspberrypi-bootloader (<<1.20160324-1)
 Provides: linux-image, wireguard-modules (= 1.0.0)
+Conflicts: raspberrypi-kernel
 Description: Raspberry Pi bootloader
  This package contains the Raspberry Pi Linux kernel.
 
-Package: raspberrypi-kernel-headers
+Package: raspberrypi-kernel-headers-rt
 Section: kernel
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
