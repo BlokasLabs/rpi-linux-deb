@@ -20,19 +20,20 @@ copy_files (){
 export ARCH
 export CROSS_COMPILE
 
-git fetch --all
+#git fetch --all
 if [ -n "$1" ]; then
 	FIRMWARE_COMMIT="$1"
 else
-	FIRMWARE_COMMIT="$(git rev-parse upstream/stable)"
+	echo Firmware commit must be specified as first argument!
+	exit 1
 fi
 
-git checkout stable
-git merge "$FIRMWARE_COMMIT" --no-edit
+#git checkout stable
+#git merge "$FIRMWARE_COMMIT" --no-edit
 
 DATE="$(git show -s --format=%ct "$FIRMWARE_COMMIT")"
-DEBVER="$(date -d "@$DATE" -u +1.%Y%m%d-1)"
-RELEASE="$(date -d "@$DATE" -u +1.%Y%m%d)"
+DEBVER="$(date -d "@$DATE" -u +2.%Y%m%d-1)"
+RELEASE="$(date -d "@$DATE" -u +2.%Y%m%d)"
 
 KERNEL_COMMIT="$(cat extra/git_hash)"
 
@@ -42,7 +43,7 @@ mkdir linux -p
 if [ -e "../linux-${KERNEL_COMMIT}.tar.gz" ]; then
 	tar xzf "../linux-${KERNEL_COMMIT}.tar.gz" -C linux --strip-components=1
 else
-	wget -qO- "https://github.com/raspberrypi/linux/archive/${KERNEL_COMMIT}.tar.gz" | tar xz -C linux --strip-components=1
+	wget -qO- "https://github.com/blokaslabs/rpi-linux-rt/archive/${KERNEL_COMMIT}.tar.gz" | tar xz -C linux --strip-components=1
 fi
 
 echo Updating files...
@@ -77,14 +78,14 @@ git tag -d "${RELEASE}-headers" || true
 git tag "${RELEASE}-headers"
 rm -rf linux
 
-git checkout debian
-git merge stable --no-edit -Xtheirs
+#git checkout debian
+#git merge stable --no-edit -Xtheirs
 
 (cd debian; ./gen_bootloader_postinst_preinst.sh)
-dch "firmware as of ${FIRMWARE_COMMIT}"
-dch -v "$DEBVER" -D buster --force-distribution "$(cut -f 1 -d'+' extra/uname_string)"
+dch "firmware as of ${FIRMWARE_COMMIT}" -b -U
+dch -v "$DEBVER" -D buster --force-distribution "$(cut -f 1 -d'+' extra/uname_string)" -b -U
 git commit -a -m "$RELEASE release"
 git tag "$RELEASE" "$FIRMWARE_COMMIT"
 
-gbp buildpackage -us -uc -sa -aarmhf
+gbp buildpackage -us -uc -sa -aarmhf --git-ignore-branch --git-ignore-new
 git clean -xdf
