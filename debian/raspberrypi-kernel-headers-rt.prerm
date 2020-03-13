@@ -1,0 +1,13 @@
+#!/bin/sh
+
+for s in + -v7+ -v7l+; do
+	INCLUDE_PREFIXES_DIR=/usr/src/linux-headers-4.19.71-rt24${s}/scripts/dtc/include-prefixes
+	if [ -e ${INCLUDE_PREFIXES_DIR} ]; then
+		for dir in $(ls ${INCLUDE_PREFIXES_DIR}); do
+			unlink ${INCLUDE_PREFIXES_DIR}/${dir} || true
+		done
+		rm -r ${INCLUDE_PREFIXES_DIR}
+	fi
+done
+
+#DEBHELPER#

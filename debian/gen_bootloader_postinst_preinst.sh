@@ -308,8 +308,19 @@ fi
 #if [ -d "/etc/kernel/header_postinst.d/${version}-v8+" ]; then
 #  run-parts -v --verbose --exit-on-error --arg=${version}-v8+ /etc/kernel/header_postinst.d/${version}-v8+
 #fi
+
+# Workaround for dtc includes.
+for s in + -v7+ -v7l+; do
+	INCLUDE_PREFIXES_DIR=/usr/src/linux-headers-4.19.71-rt24\${s}/scripts/dtc/include-prefixes
+	mkdir \${INCLUDE_PREFIXES_DIR}
+	ln -s ../../../include/dt-bindings \${INCLUDE_PREFIXES_DIR}/dt-bindings
+	for dir in arcm arm arm64 c6x h8300 microblaze mips nios2 openrisc powerpc sh xtensa; do
+		ln -s ../../../arch/\${dir}/boot/dts \${INCLUDE_PREFIXES_DIR}/\${dir}
+	done
+done
 EOF
 
 printf "#DEBHELPER#\n" >> raspberrypi-kernel-rt.prerm
 printf "#DEBHELPER#\n" >> raspberrypi-kernel-rt.postrm
 printf "#DEBHELPER#\n" >> raspberrypi-kernel-headers-rt.postinst
+printf "#DEBHELPER#\n" >> raspberrypi-kernel-headers-rt.prerm
