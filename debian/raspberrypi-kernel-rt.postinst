@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 get_file_list() {
-  cat /var/lib/dpkg/info/raspberrypi-kernel.md5sums /var/lib/dpkg/info/raspberrypi-kernel.md5sums 2> /dev/null | awk '/ boot/ {print "/"$2}'
+  cat /var/lib/dpkg/info/raspberrypi-kernel-rt.md5sums /var/lib/dpkg/info/raspberrypi-kernel-rt.md5sums 2> /dev/null | awk '/ boot/ {print "/"$2}'
 }
 
 get_filtered_file_list() {
@@ -23,7 +23,7 @@ is_pifour() {
   return $?
 }
 
-if [ "$(get_available_space)" -lt "53" ]; then
+if [ "$(get_available_space)" -lt "40" ]; then
   echo "You do not have enough space in /boot to install this package."
   SKIP_FILES=1
   if is_pifour; then
@@ -52,11 +52,6 @@ if [ "$SKIP_FILES" != "1" ] || [ "${SKIP_PI4}" = "0" ]; then
   if [ -f /usr/share/rpikernelhack/kernel7l.img ]; then
     rm -f /boot/kernel7l.img
     dpkg-divert --package rpikernelhack --rename --remove /boot/kernel7l.img
-    sync
-  fi
-  if [ -f /usr/share/rpikernelhack/kernel8.img ]; then
-    rm -f /boot/kernel8.img
-    dpkg-divert --package rpikernelhack --rename --remove /boot/kernel8.img
     sync
   fi
 fi
@@ -91,11 +86,6 @@ if [ -f /usr/share/rpikernelhack/bcm2709-rpi-2-b.dtb ]; then
   dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2709-rpi-2-b.dtb
   sync
 fi
-if [ -f /usr/share/rpikernelhack/bcm2710-rpi-2-b.dtb ]; then
-  rm -f /boot/bcm2710-rpi-2-b.dtb
-  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2710-rpi-2-b.dtb
-  sync
-fi
 if [ -f /usr/share/rpikernelhack/bcm2710-rpi-3-b-plus.dtb ]; then
   rm -f /boot/bcm2710-rpi-3-b-plus.dtb
   dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2710-rpi-3-b-plus.dtb
@@ -114,6 +104,66 @@ fi
 if [ -f /usr/share/rpikernelhack/bcm2711-rpi-4-b.dtb ]; then
   rm -f /boot/bcm2711-rpi-4-b.dtb
   dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2711-rpi-4-b.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-a-plus.dtb ]; then
+  rm -f /boot/bcm2835-rpi-a-plus.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-a-plus.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-a.dtb ]; then
+  rm -f /boot/bcm2835-rpi-a.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-a.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-b-plus.dtb ]; then
+  rm -f /boot/bcm2835-rpi-b-plus.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-b-plus.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-b-rev2.dtb ]; then
+  rm -f /boot/bcm2835-rpi-b-rev2.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-b-rev2.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-b.dtb ]; then
+  rm -f /boot/bcm2835-rpi-b.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-b.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-cm1-io1.dtb ]; then
+  rm -f /boot/bcm2835-rpi-cm1-io1.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-cm1-io1.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-zero-w.dtb ]; then
+  rm -f /boot/bcm2835-rpi-zero-w.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-zero-w.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2835-rpi-zero.dtb ]; then
+  rm -f /boot/bcm2835-rpi-zero.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2835-rpi-zero.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2836-rpi-2-b.dtb ]; then
+  rm -f /boot/bcm2836-rpi-2-b.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2836-rpi-2-b.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2837-rpi-3-b-plus.dtb ]; then
+  rm -f /boot/bcm2837-rpi-3-b-plus.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2837-rpi-3-b-plus.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2837-rpi-3-b.dtb ]; then
+  rm -f /boot/bcm2837-rpi-3-b.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2837-rpi-3-b.dtb
+  sync
+fi
+if [ -f /usr/share/rpikernelhack/bcm2838-rpi-4-b.dtb ]; then
+  rm -f /boot/bcm2838-rpi-4-b.dtb
+  dpkg-divert --package rpikernelhack --rename --remove /boot/bcm2838-rpi-4-b.dtb
   sync
 fi
 if [ -f /usr/share/rpikernelhack/COPYING.linux ]; then
@@ -194,16 +244,6 @@ fi
 if [ -f /usr/share/rpikernelhack/overlays/allo-piano-dac-plus-pcm512x-audio.dtbo ]; then
   rm -f /boot/overlays/allo-piano-dac-plus-pcm512x-audio.dtbo
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/allo-piano-dac-plus-pcm512x-audio.dtbo
-  sync
-fi
-if [ -f /usr/share/rpikernelhack/overlays/anyspi.dtbo ]; then
-  rm -f /boot/overlays/anyspi.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/anyspi.dtbo
-  sync
-fi
-if [ -f /usr/share/rpikernelhack/overlays/apds9960.dtbo ]; then
-  rm -f /boot/overlays/apds9960.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/apds9960.dtbo
   sync
 fi
 if [ -f /usr/share/rpikernelhack/overlays/applepi-dac.dtbo ]; then
@@ -401,16 +441,6 @@ if [ -f /usr/share/rpikernelhack/overlays/hifiberry-dacplusadcpro.dtbo ]; then
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/hifiberry-dacplusadcpro.dtbo
   sync
 fi
-if [ -f /usr/share/rpikernelhack/overlays/hifiberry-dacplusdsp.dtbo ]; then
-  rm -f /boot/overlays/hifiberry-dacplusdsp.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/hifiberry-dacplusdsp.dtbo
-  sync
-fi
-if [ -f /usr/share/rpikernelhack/overlays/hifiberry-dacplushd.dtbo ]; then
-  rm -f /boot/overlays/hifiberry-dacplushd.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/hifiberry-dacplushd.dtbo
-  sync
-fi
 if [ -f /usr/share/rpikernelhack/overlays/hifiberry-digi-pro.dtbo ]; then
   rm -f /boot/overlays/hifiberry-digi-pro.dtbo
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/hifiberry-digi-pro.dtbo
@@ -551,19 +581,9 @@ if [ -f /usr/share/rpikernelhack/overlays/iqaudio-digi-wm8804-audio.dtbo ]; then
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/iqaudio-digi-wm8804-audio.dtbo
   sync
 fi
-if [ -f /usr/share/rpikernelhack/overlays/irs1125.dtbo ]; then
-  rm -f /boot/overlays/irs1125.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/irs1125.dtbo
-  sync
-fi
 if [ -f /usr/share/rpikernelhack/overlays/jedec-spi-nor.dtbo ]; then
   rm -f /boot/overlays/jedec-spi-nor.dtbo
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/jedec-spi-nor.dtbo
-  sync
-fi
-if [ -f /usr/share/rpikernelhack/overlays/justboom-both.dtbo ]; then
-  rm -f /boot/overlays/justboom-both.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/justboom-both.dtbo
   sync
 fi
 if [ -f /usr/share/rpikernelhack/overlays/justboom-dac.dtbo ]; then
@@ -1061,11 +1081,6 @@ if [ -f /usr/share/rpikernelhack/overlays/w1-gpio.dtbo ]; then
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/w1-gpio.dtbo
   sync
 fi
-if [ -f /usr/share/rpikernelhack/overlays/w5500.dtbo ]; then
-  rm -f /boot/overlays/w5500.dtbo
-  dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/w5500.dtbo
-  sync
-fi
 if [ -f /usr/share/rpikernelhack/overlays/wittypi.dtbo ]; then
   rm -f /boot/overlays/wittypi.dtbo
   dpkg-divert --package rpikernelhack --rename --remove /boot/overlays/wittypi.dtbo
@@ -1080,23 +1095,23 @@ if [ -f /etc/default/raspberrypi-kernel ]; then
 
 fi
 if [ -d "/etc/kernel/postinst.d" ]; then
-  run-parts -v --report --exit-on-error --arg=4.19.97+ --arg=/boot/kernel.img /etc/kernel/postinst.d
-  run-parts -v --report --exit-on-error --arg=4.19.97-v7+ --arg=/boot/kernel7.img /etc/kernel/postinst.d
-  run-parts -v --report --exit-on-error --arg=4.19.97-v7l+ --arg=/boot/kernel7l.img /etc/kernel/postinst.d
-  run-parts -v --report --exit-on-error --arg=4.19.97-v8+ --arg=/boot/kernel8.img /etc/kernel/postinst.d
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24+ --arg=/boot/kernel.img /etc/kernel/postinst.d
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v7+ --arg=/boot/kernel7.img /etc/kernel/postinst.d
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v7l+ --arg=/boot/kernel7l.img /etc/kernel/postinst.d
+  #run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v8+ --arg=/boot/kernel8.img /etc/kernel/postinst.d
 fi
-if [ -d "/etc/kernel/postinst.d/4.19.97+" ]; then
-  run-parts -v --report --exit-on-error --arg=4.19.97+ --arg=/boot/kernel.img /etc/kernel/postinst.d/4.19.97+
+if [ -d "/etc/kernel/postinst.d/4.19.71-rt24+" ]; then
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24+ --arg=/boot/kernel.img /etc/kernel/postinst.d/4.19.71-rt24+
 fi
-if [ -d "/etc/kernel/postinst.d/4.19.97-v7+" ]; then
-  run-parts -v --report --exit-on-error --arg=4.19.97-v7+ --arg=/boot/kernel7.img /etc/kernel/postinst.d/4.19.97-v7+
+if [ -d "/etc/kernel/postinst.d/4.19.71-rt24-v7+" ]; then
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v7+ --arg=/boot/kernel7.img /etc/kernel/postinst.d/4.19.71-rt24-v7+
 fi
-if [ -d "/etc/kernel/postinst.d/4.19.97-v7l+" ]; then
-  run-parts -v --report --exit-on-error --arg=4.19.97-v7l+ --arg=/boot/kernel7l.img /etc/kernel/postinst.d/4.19.97-v7l+
+if [ -d "/etc/kernel/postinst.d/4.19.71-rt24-v7l+" ]; then
+  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v7l+ --arg=/boot/kernel7l.img /etc/kernel/postinst.d/4.19.71-rt24-v7l+
 fi
-if [ -d "/etc/kernel/postinst.d/4.19.97-v8+" ]; then
-  run-parts -v --report --exit-on-error --arg=4.19.97-v8+ --arg=/boot/kernel8.img /etc/kernel/postinst.d/4.19.97-v8+
-fi
+#if [ -d "/etc/kernel/postinst.d/4.19.71-rt24-v8+" ]; then
+#  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v8+ --arg=/boot/kernel8.img /etc/kernel/postinst.d/4.19.71-rt24-v8+
+#fi
 if [ -d /usr/share/rpikernelhack/overlays ]; then
   rmdir --ignore-fail-on-non-empty /usr/share/rpikernelhack/overlays
 fi
