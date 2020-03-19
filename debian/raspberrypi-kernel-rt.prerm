@@ -25,4 +25,7 @@ fi
 if [ -d "/etc/kernel/prerm.d/5.10.17-v8+" ]; then
   run-parts -v --report --exit-on-error --arg=5.10.17-v8+ --arg=/boot/kernel8.img /etc/kernel/prerm.d/5.10.17-v8+
 fi
+#if [ -d "/etc/kernel/prerm.d/4.19.71-rt24-v8+" ]; then
+#  run-parts -v --report --exit-on-error --arg=4.19.71-rt24-v8+ --arg=/boot/kernel8.img /etc/kernel/prerm.d/4.19.71-rt24-v8+
+#fi
 #DEBHELPER#

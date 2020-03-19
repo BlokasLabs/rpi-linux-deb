@@ -139,6 +139,17 @@ raspberrypi-firmware (1.20200512-1) buster; urgency=medium
 
  -- Serge Schneider <serge@raspberrypi.org>  Wed, 13 May 2020 09:41:25 +0100
 
+raspberrypi-firmware (2.20200312-1) buster; urgency=medium
+
+  [ pi@raspberrypi ]
+  * Non-maintainer upload.
+  * firmware as of 29d8f7c4a7413cffb44fc488b579b12452f68cd1
+
+  [  ]
+  * Linux version 4.19.71-rt24
+
+ --  <pi@raspberrypi>  Thu, 19 Mar 2020 12:14:05 +0000
+
 raspberrypi-firmware (1.20200212-1) buster; urgency=medium
 
   * firmware as of 9a34efbf2fc6a27231607ce91a7cb6bf3bdbc0c5
